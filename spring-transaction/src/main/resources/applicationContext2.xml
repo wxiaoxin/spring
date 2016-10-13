@@ -38,20 +38,14 @@
     </bean>
 
 
-    <!-- 转账操作 -->
-    <bean id="accountService" class="com.xx.spring.transaction.service2.AccountService2" />
-
-
     <!-- 事务管理器 TransactionManager -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
 
 
-    <!-- 增强的转账操作代理类 -->
-    <bean id="accountServiceProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <!-- 事务管理的对象 -->
-        <property name="target" ref="accountService" />
+    <!-- 通用的代理对象类 -->
+    <bean id="baseProxyBean" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <!-- 事务管理器 -->
         <property name="transactionManager" ref="transactionManager" />
         <!-- 事务属性 -->
@@ -65,9 +59,19 @@
                         -Exception    发生指定异常时回滚事务
                         +Exception    发生指定异常时依然提交事务
                 -->
-                <prop key="transfer">PROPAGATION_REQUIRED,+java.lang.ArithmeticException</prop>
+                <prop key="*">PROPAGATION_REQUIRED,+java.lang.ArithmeticException</prop>
             </props>
         </property>
+    </bean>
+
+
+    <!-- 转账操作 -->
+    <bean id="accountService" class="com.xx.spring.transaction.service2.AccountService2" />
+
+    <!-- 增强的转账事务操作代理类 -->
+    <bean id="accountServiceProxy" parent="baseProxyBean">
+        <!-- 事务管理的对象 -->
+        <property name="target" ref="accountService" />
     </bean>
 
 </beans>
