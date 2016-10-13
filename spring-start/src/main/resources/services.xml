@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-lazy-init="true">
+
+    <!--
+        default-lazy-init="true" 全局默认懒加载
+    -->
+
+    <bean id="bookStoreService" class="com.xx.spring.start.service.impl.BookStoreService" lazy-init="true"/>
+
+
+
+    <!-- 构造注入 Constructor-based dependency injection -->
+    <bean id="bookStoreService2" class="com.xx.spring.start.service.impl.BookStoreService2">
+        <constructor-arg name="bookDao" ref="bookDao"/>
+        <constructor-arg name="accountDao" ref="accountDao"/>
+    </bean>
+
+    <!-- c命令空间 -->
+    <bean id="bookStoreService22"
+          class="com.xx.spring.start.service.impl.BookStoreService2"
+          c:bookDao-ref="bookDao"
+          c:accountDao-ref="accountDao"/>
+
+
+
+
+    <!-- 设值注入 Setter-based dependency injection -->
+    <bean id="bookStoreService3" class="com.xx.spring.start.service.impl.BookStoreService3"
+          depends-on="bookDao, accountDao">
+        <property name="bookDao" ref="bookDao"/>
+        <property name="accountDao" ref="accountDao"/>
+    </bean>
+
+
+    <!-- p命名空间 -->
+    <bean id="bookStoreService33"
+          class="com.xx.spring.start.service.impl.BookStoreService3"
+          p:bookDao-ref="bookDao"
+          p:accountDao-ref="accountDao"/>
+
+</beans>

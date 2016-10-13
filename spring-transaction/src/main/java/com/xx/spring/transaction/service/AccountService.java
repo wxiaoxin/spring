@@ -36,7 +36,7 @@ public class AccountService implements IAccountService {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
                 accountDao.out(out, money);
-                int i = 1 / 0;
+//                int i = 1 / 0;
                 accountDao.in(in, money);
             }
         });
