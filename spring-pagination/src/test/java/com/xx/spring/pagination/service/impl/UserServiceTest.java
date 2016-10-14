@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by Administrator on 2016/10/14.
  */
@@ -24,8 +22,8 @@ public class UserServiceTest {
 
     @Test
     public void testList() throws Exception {
-        int pageNumber = 5;
-        int pageSize = 3;
+        int pageNumber = 3;
+        int pageSize = 4;
         Page<User> page = userService.list(pageNumber, pageSize);
         System.out.println(page);
     }
