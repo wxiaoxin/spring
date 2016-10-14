@@ -22,6 +22,9 @@ public class BookStoreServiceTest extends BaseTest {
     public void buyBook() throws Exception {
         IBookStoreService bookStoreService = context.getBean("bookStoreService", IBookStoreService.class);
         bookStoreService.buyBook("钱穆", "国史大纲", 10);
+
+        IBookStoreService bookStoreService2 = context.getBean("bookStoreService", IBookStoreService.class);
+        bookStoreService2.buyBook("钱穆", "国史大纲", 10);
     }
 
 }

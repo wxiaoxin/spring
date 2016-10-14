@@ -10,8 +10,15 @@
         default-lazy-init="true" 全局默认懒加载
     -->
 
-    <bean id="bookStoreService" class="com.xx.spring.start.service.impl.BookStoreService" lazy-init="true"/>
+    <!--
+        scope:  prototype 原型，默认，每次请求容器都会重新实例化一个对象
+                singleton 单例，全局只有一个实例
+    -->
 
+    <bean id="bookStoreService"
+          class="com.xx.spring.start.service.impl.BookStoreService"
+          lazy-init="true"
+          scope="prototype"/>
 
 
     <!-- 构造注入 Constructor-based dependency injection -->
@@ -25,8 +32,6 @@
           class="com.xx.spring.start.service.impl.BookStoreService2"
           c:bookDao-ref="bookDao"
           c:accountDao-ref="accountDao"/>
-
-
 
 
     <!-- 设值注入 Setter-based dependency injection -->

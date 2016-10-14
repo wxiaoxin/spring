@@ -11,7 +11,7 @@ import com.xx.spring.start.service.IBookStoreService;
 public class BookStoreService implements IBookStoreService {
 
     public BookStoreService() {
-        System.out.println(hashCode());
+        System.out.println("BookStoreService " + hashCode());
     }
 
     @Override
