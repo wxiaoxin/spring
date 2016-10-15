@@ -39,6 +39,12 @@ public class Page<T> implements Serializable {
     public Page() {
     }
 
+    /**
+     *
+     * @param pageNumber 页码
+     * @param pageSize 分页的记录条数
+     * @param dataList 所有的记录
+     */
     public Page(int pageNumber, int pageSize, List<T> dataList) {
         // 记录总数为记录集合的大小
         this.totalRecord = dataList.size();
@@ -56,6 +62,29 @@ public class Page<T> implements Serializable {
         int toIndex = pageNumber >= totalPage ? totalRecord : pageNumber * pageSize;
         this.dataList = dataList.subList(fromIndex, toIndex);
     }
+
+    /**
+     * @param pageNumber 页码
+     * @param pageSize 分页的记录条数
+     * @param totalRecord 查询总记录条数
+     * @param dataList 查询到的分页数据
+     */
+    public Page(int pageNumber, int pageSize, int totalRecord, List<T> dataList) {
+        // 记录总数为记录集合的大小
+        this.totalRecord = totalRecord;
+        // 记录总页数
+        this.totalPage = totalRecord / pageSize;
+        if (totalRecord % pageSize != 0) {
+            totalPage = totalPage + 1;
+        }
+        // 如果分页页码多于总页数，则分页页码为总页数
+        this.pageNumber = pageNumber > totalPage ? totalPage : pageNumber;
+        // 分页大小
+        this.pageSize = pageSize;
+        // 数据
+        this.dataList = dataList;
+    }
+
 
 
     @Override

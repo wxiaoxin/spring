@@ -1,5 +1,6 @@
 package com.xx.spring.pagination.dao.impl;
 
+import com.xx.spring.pagination.base.LimitParam;
 import com.xx.spring.pagination.dao.IUserDao;
 import com.xx.spring.pagination.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,9 +62,30 @@ public class UserDao implements IUserDao {
     }
 
     @Override
+    public int count() {
+        String sql = "select count(*) as count from t_user";
+        return jt.queryForObject(sql, Integer.class);
+    }
+
+    @Override
     public List<User> listAll() {
         String sql = " select * from t_user ";
         return jt.query(sql, new RowMapper<User>() {
+            @Override
+            public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+                User user = new User();
+                user.setId(rs.getString("id"));
+                user.setName(rs.getString("name"));
+                user.setPwd(rs.getString("pwd"));
+                return user;
+            }
+        });
+    }
+
+    @Override
+    public List<User> listAll(LimitParam limitParam) {
+        String sql = " select * from t_user limit ?,? ";
+        return jt.query(sql,new Object[]{limitParam.offset, limitParam.rowCount}, new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet rs, int rowNum) throws SQLException {
                 User user = new User();

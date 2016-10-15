@@ -1,5 +1,7 @@
 package com.xx.spring.pagination.dao;
 
+import com.xx.spring.pagination.base.LimitParam;
+import com.xx.spring.pagination.base.Page;
 import com.xx.spring.pagination.entity.User;
 
 import java.util.List;
@@ -17,7 +19,10 @@ public interface IUserDao {
 
     User get(String id);
 
+    int count();
+
     List<User> listAll();
 
+    List<User> listAll(LimitParam limitParam);
 
 }

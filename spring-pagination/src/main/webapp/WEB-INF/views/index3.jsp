@@ -17,7 +17,6 @@
 
     <h1>用户管理</h1>
 
-
     <table id="table" class="table table-hover">
 
         <thead>
@@ -87,26 +86,33 @@
 
 <script>
 
-    NProgress.start();
-
     var pageNumber = ${page.pageNumber};
-    var pageSize = ${page.pageSize};
+    var pageSize = 3;
     var totalPage = ${page.totalPage};
     var totalRecord = ${page.totalRecord};
 
+    /**
+     * 页码点击事件
+     */
     $(".pageBtn").click(function () {
         var number = $(this).data("number");
         $(".now").removeClass("btn-primary now");
         $(this).addClass("btn-primary now");
-        getData(number, 3);
+        getData(number, pageSize);
     });
 
+    /**
+     * 首页按钮点击事件
+     */
     $("#firstBtn").click(function () {
         $(".now").removeClass("btn-primary now");
         $(".pageBtn:first").addClass("btn-primary now");
-        getData(1, 3);
+        getData(1, pageSize);
     });
 
+    /**
+     * 上一页按钮点击事件
+     */
     $("#preBtn").click(function () {
         if (pageNumber == 1) {
             toastr.warning("已经在第一页");
@@ -116,10 +122,13 @@
             $now.removeClass("btn-primary now");
             $now.prev().addClass("btn-primary now");
             // 获取数据
-            getData(pageNumber - 1, 3);
+            getData(pageNumber - 1, pageSize);
         }
     });
 
+    /**
+     * 下一页按钮点击事件
+     */
     $("#nextBtn").click(function () {
         if (pageNumber == totalPage) {
             toastr.warning("已经在最后一页");
@@ -129,18 +138,26 @@
             $now.removeClass("btn-primary now");
             $now.next().addClass("btn-primary now");
             // 获取数据
-            getData(pageNumber + 1, 3);
+            getData(pageNumber + 1, pageSize);
         }
     });
 
+    /**
+     * 最后一页按钮点击事件
+     */
     $("#lastBtn").click(function () {
         $(".now").removeClass("btn-primary");
         $(".now").removeClass("now");
         $(".pageBtn:last").addClass("btn-primary");
         $(".pageBtn:last").addClass("now");
-        getData(totalPage, 3);
+        getData(totalPage, pageSize);
     });
 
+    /**
+     * ajax请求表单数据
+     * @param i 页码
+     * @param n 页面记录条数
+     */
     function getData(i, n) {
         $.ajax({
             url: "${path}/data.htm",
@@ -154,7 +171,6 @@
             },
             success: function (resp) {
                 pageNumber = resp.pageNumber;
-                pageSize = resp.pageSize;
                 totalPage = resp.totalPage;
                 totalRecord = resp.totalRecord;
                 $("#pnSpan").text(pageNumber);
@@ -171,7 +187,10 @@
         });
     }
 
-
+    /**
+     * 刷新表单数据
+     * @param data 表单数据
+     */
     function refresh(data) {
         var $userTableBody = $("#table tbody");
         $userTableBody.empty();
@@ -195,9 +214,6 @@
         });
 
     }
-
-    NProgress.done();
-
 
 </script>
 
